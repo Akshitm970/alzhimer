@@ -4,4 +4,4 @@ Pillow
 numpy
 streamlit-option-menu
 mysql-connector-python
-fpdf
+fpdf2
