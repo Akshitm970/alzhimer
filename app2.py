@@ -7,19 +7,19 @@ import re
 import base64
 from fpdf import FPDF
 
-import mysql.connector
-try:
-    mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="ritumittal8908@gmail",
-        database="Alzheimers"
-    )
-    print("Database connection successful")
-except mysql.connector.Error as err:
-    print("Error connecting to database:", err)
-    exit(1)
-mycursor = mydb.cursor()
+# import mysql.connector
+# try:
+#     mydb = mysql.connector.connect(
+#         host="localhost",
+#         user="root",
+#         password="ritumittal8908@gmail",
+#         database="Alzheimers"
+#     )
+#     print("Database connection successful")
+# except mysql.connector.Error as err:
+#     print("Error connecting to database:", err)
+#     exit(1)
+# mycursor = mydb.cursor()
 
 
 
@@ -136,15 +136,15 @@ if selected=='Alzhiemer Detection':
         submit=st.form_submit_button("Submit")
 
         # Define a function to insert the form data into the `prediction` table
-    def insert_data(name, age, gender, contact, prediction):
-        try:
-          sql = "INSERT INTO predictions (Patient_Name, Age, Gender, Contact, Prediction) VALUES (%s, %s, %s, %s, %s)"
-          val = (name, age, gender, contact, prediction)
-          mycursor.execute(sql, val)
-          mydb.commit()
-          print(mycursor.rowcount, "record inserted")
-        except mysql.connector.Error as err:
-          print("Error inserting record:", err)  
+    # def insert_data(name, age, gender, contact, prediction):
+    #     try:
+    #       sql = "INSERT INTO predictions (Patient_Name, Age, Gender, Contact, Prediction) VALUES (%s, %s, %s, %s, %s)"
+    #       val = (name, age, gender, contact, prediction)
+    #       mycursor.execute(sql, val)
+    #       mydb.commit()
+    #       print(mycursor.rowcount, "record inserted")
+    #     except mysql.connector.Error as err:
+    #       print("Error inserting record:", err)  
 
                 
     if file is not None and validate_input(name, age,contact,file) and validate_phone_number(contact) and validate_name(name):
@@ -164,89 +164,89 @@ if selected=='Alzhiemer Detection':
                   st.success('The predicted class is: '+ class_labels[prediction[0]])
                   result_str = 'Name: {}\nAge: {}\nGender: {}\nContact: {}\nPrediction for Alzheimer: {}'.format(
                      name, age, gender, contact, class_labels[prediction[0]])
-                  insert_data(name, age, gender, contact, class_labels[prediction[0]])
-                  export_as_pdf = st.button("Export Report")
+                #   insert_data(name, age, gender, contact, class_labels[prediction[0]])
+                #   export_as_pdf = st.button("Export Report")
 
                   def create_download_link(val, filename):
                     b64 = base64.b64encode(val)  # val looks like b'...'
                     return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}.pdf">Download file</a>'
         
-                  if export_as_pdf:
-                     pdf = FPDF()
-                     pdf.add_page()
-                     # set the border style
-                     pdf.set_draw_color(0, 0, 0)
-                     pdf.set_line_width(1)
+                #   if export_as_pdf:
+                #      pdf = FPDF()
+                #      pdf.add_page()
+                #      # set the border style
+                #      pdf.set_draw_color(0, 0, 0)
+                #      pdf.set_line_width(1)
 
-                     # add a border to the entire page
-                     pdf.rect(5.0, 5.0, 200.0, 287.0, 'D')
+                #      # add a border to the entire page
+                #      pdf.rect(5.0, 5.0, 200.0, 287.0, 'D')
     
-                     # Set font for title
-                     pdf.set_font('Times', 'B', 24)
-                     pdf.cell(200, 20, 'Alzheimer Detection Report', 0, 1, 'C')
+                #      # Set font for title
+                #      pdf.set_font('Times', 'B', 24)
+                #      pdf.cell(200, 20, 'Alzheimer Detection Report', 0, 1, 'C')
     
-                     # Set font for section headers
-                     pdf.set_font('Arial', 'B', 16)
-                     pdf.cell(200, 10, 'Patient Details', 0, 1)
+                #      # Set font for section headers
+                #      pdf.set_font('Arial', 'B', 16)
+                #      pdf.cell(200, 10, 'Patient Details', 0, 1)
     
-                     # Set font for regular text
-                     pdf.set_font('Arial', '', 12)
-                     pdf.cell(200, 10, f'Name: {name}', 0, 1)
-                     pdf.cell(200, 10, f'Age: {age}', 0, 1)
-                     pdf.cell(200, 10, f'Gender: {gender}', 0, 1)
-                     pdf.cell(200, 10, f'Contact: {contact}', 0, 1)
-                     pdf.ln(0.15)
-                     pdf.ln(0.15)
+                #      # Set font for regular text
+                #      pdf.set_font('Arial', '', 12)
+                #      pdf.cell(200, 10, f'Name: {name}', 0, 1)
+                #      pdf.cell(200, 10, f'Age: {age}', 0, 1)
+                #      pdf.cell(200, 10, f'Gender: {gender}', 0, 1)
+                #      pdf.cell(200, 10, f'Contact: {contact}', 0, 1)
+                #      pdf.ln(0.15)
+                #      pdf.ln(0.15)
 
 
 
-                     # Add the image to the PDF object's images dictionary
-                     png_file = "image.png"
-                     png_image.save(png_file, "PNG")
-                     pdf.cell(200, 10, 'MRI scan:', 0, 1)
-                     pdf.image(png_file, x=40, y=80, w=50,h=50)
-                     pdf.ln(0.15)
-                     pdf.ln(10.0)
-                     pdf.ln(10.0)
-                     pdf.ln(10.15)
-                     pdf.ln(10.15)
-                     pdf.ln(1.15)
-                     pdf.ln(1.15)
-                     pdf.ln(1.15)
+                #      # Add the image to the PDF object's images dictionary
+                #      png_file = "image.png"
+                #      png_image.save(png_file, "PNG")
+                #      pdf.cell(200, 10, 'MRI scan:', 0, 1)
+                #      pdf.image(png_file, x=40, y=80, w=50,h=50)
+                #      pdf.ln(0.15)
+                #      pdf.ln(10.0)
+                #      pdf.ln(10.0)
+                #      pdf.ln(10.15)
+                #      pdf.ln(10.15)
+                #      pdf.ln(1.15)
+                #      pdf.ln(1.15)
+                #      pdf.ln(1.15)
 
-                     # Set font for prediction text
-                     pdf.set_font('Arial', 'B', 16)
-                     pdf.cell(200, 10, f'Prediction for Alzheimer: {class_labels[prediction[0]]}', 0, 1)
-                     pdf.ln(2.0)
-                     pdf.set_font('Arial', 'B', 12)
-                     if (prediction!=2):
-                      pdf.set_text_color(255, 0, 0)
-                      pdf.cell(200,10,'Demetia detected in your MRI, kindly consult a nearby neurologist immediately!',0,1)
-                      pdf.set_text_color(0, 0, 255)
-                      pdf.set_font('Arial', 'B', 10)
-                      pdf.cell(200, 10, 'Here are some precautions you can take:', 0, 1, 'C')
-                      pdf.ln(2)
+                #      # Set font for prediction text
+                #      pdf.set_font('Arial', 'B', 16)
+                #      pdf.cell(200, 10, f'Prediction for Alzheimer: {class_labels[prediction[0]]}', 0, 1)
+                #      pdf.ln(2.0)
+                #      pdf.set_font('Arial', 'B', 12)
+                #      if (prediction!=2):
+                #       pdf.set_text_color(255, 0, 0)
+                #       pdf.cell(200,10,'Demetia detected in your MRI, kindly consult a nearby neurologist immediately!',0,1)
+                #       pdf.set_text_color(0, 0, 255)
+                #       pdf.set_font('Arial', 'B', 10)
+                #       pdf.cell(200, 10, 'Here are some precautions you can take:', 0, 1, 'C')
+                #       pdf.ln(2)
 
-                      precautions = [
-                        '1. Stay mentally active: Engage in mentally stimulating activities such as reading, writing, puzzles, and games to keep your brain active.',
-                        '2. Stay physically active: Exercise regularly to improve blood flow to the brain and help prevent cognitive decline.',
-                        '3. Eat a healthy diet: Eat a balanced diet that is rich in fruits, vegetables, whole grains, and lean protein to help maintain brain health.',
-                        '4. Stay socially active: Engage in social activities and maintain social connections to help prevent social isolation and depression.',
-                        '5. Get enough sleep: Aim for 7-8 hours of sleep per night to help improve brain function and prevent cognitive decline.'                ]
+                #       precautions = [
+                #         '1. Stay mentally active: Engage in mentally stimulating activities such as reading, writing, puzzles, and games to keep your brain active.',
+                #         '2. Stay physically active: Exercise regularly to improve blood flow to the brain and help prevent cognitive decline.',
+                #         '3. Eat a healthy diet: Eat a balanced diet that is rich in fruits, vegetables, whole grains, and lean protein to help maintain brain health.',
+                #         '4. Stay socially active: Engage in social activities and maintain social connections to help prevent social isolation and depression.',
+                #         '5. Get enough sleep: Aim for 7-8 hours of sleep per night to help improve brain function and prevent cognitive decline.'                ]
         
-                      pdf.set_font('Arial', '', 12)
+                #       pdf.set_font('Arial', '', 12)
 
-                      for precaution in precautions:
-                       pdf.multi_cell(190, 10, precaution, 0, 1, 'L')
-                       pdf.ln(1)
+                #       for precaution in precautions:
+                #        pdf.multi_cell(190, 10, precaution, 0, 1, 'L')
+                #        pdf.ln(1)
           
-                     else:
-                       pdf.set_text_color(0, 255, 0)
-                       pdf.cell(200,10,'Congratulations! There is no sign of demetia in your MRI.',0,1)
+                #      else:
+                #        pdf.set_text_color(0, 255, 0)
+                #        pdf.cell(200,10,'Congratulations! There is no sign of demetia in your MRI.',0,1)
     
-                      # Create and display the download link
-                     html = create_download_link(pdf.output(dest="S").encode("latin-1"), "test")
-                     st.markdown(html, unsafe_allow_html=True)
+                #       # Create and display the download link
+                #      html = create_download_link(pdf.output(dest="S").encode("latin-1"), "test")
+                #      st.markdown(html, unsafe_allow_html=True)
 
 
 
