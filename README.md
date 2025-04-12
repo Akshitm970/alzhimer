@@ -35,3 +35,9 @@ http://your-ec2-public-ip:8501
 
 
 nohup streamlit run app2.py
+
+to stop 
+ps aux | grep streamlit
+kill -9 <PID>
+//change <PID> with id
+
